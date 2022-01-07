@@ -1,19 +1,33 @@
 import subprocess
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 data = subprocess.check_output(['netsh', 'wlan', 'show', 'profile']).decode('utf-8').split('\n')
-# print(data)
-
 profiles = []
 for profile in data:
-    print(profile)
     if "All User Profile" in profile:
-        print(profile.split(":"))
         profiles.append(profile.split(":")[1][1:-1])
-print(profiles)
+
+passwords = []
 for profile in profiles:
     results = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', profile, 'key=clear']).decode('utf-8').split('\n')
-    results = [b.split(":")[1][1:-1] for b in results if "Key Content" in b]
-    try:
-        print ("{:<35}|  {:<}".format(profile, results[0]))
-    except IndexError:
-        print ("{:<35}|  {:<}".format(profile, ""))
+    for res in results:
+        if "Key Content" in res:
+            passwords.append(res.split(":")[1][1:-1])
+        elif "Key Index" in res:
+            passwords.append(" ")
+
+res = {}
+for key in profiles:
+    for value in passwords:
+        res[key] = value
+        passwords.remove(value)
+        break
+
+@app.route("/")
+def home():
+    return render_template("index.html", dictionary_names_pw = res)
+
+if __name__ == "__main__":
+    app.run(debug = True)
