@@ -26,3 +26,13 @@ h2 {
   padding-bottom: 2em;
   color: #FB667A;
 }
+
+h2 a {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FB667A;
+  text-decoration: none;
+}
+
+.blue { color: #185875; }
+.yellow { color: #FFF842; }
