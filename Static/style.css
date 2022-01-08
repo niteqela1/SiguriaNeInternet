@@ -66,3 +66,14 @@ padding: 0 0 8em 0;
   padding-top: 2%;
 padding-left:2%;
 }
+
+
+/* Background-color of the odd rows */
+.container tr:nth-child(odd) {
+  background-color: #323C50;
+}
+
+/* Background-color of the even rows */
+.container tr:nth-child(even) {
+  background-color: #2C3446;
+}
