@@ -1,0 +1,1 @@
+# Leximi i fjalëkalimeve të ruajtura të WiFi-ve
